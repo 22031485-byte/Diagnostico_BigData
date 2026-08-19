@@ -1,8 +1,12 @@
-/**
- * public/js/app.js
- * Todo el frontend dinámico: pestañas de reportes/gráficos, llamadas fetch
- * a api.php, renderizado de tablas y gráficos con Chart.js.
- */
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 
 const chartInstances = {};
 
@@ -23,7 +27,7 @@ function fillTable(tableId, rows, columns) {
     }
     for (const row of rows) {
         const tr = document.createElement('tr');
-        tr.innerHTML = columns.map(col => `<td>${row[col] ?? ''}</td>`).join('');
+        tr.innerHTML = columns.map(col => `<td>${escapeHtml(row[col] ?? '')}</td>`).join('');
         tbody.appendChild(tr);
     }
 }
@@ -244,27 +248,42 @@ function initEmployeeSearch() {
         const q = input.value.trim();
         if (!q) return;
         try {
-            const data = await apiGet('employee_search', { q });
+            const result = await apiGet('employee_search', { q });
+            const rows = result.results;
+
             const tbody = document.querySelector('#table-search-results tbody');
             tbody.innerHTML = '';
-            if (!data.length) {
+
+            if (!rows.length) {
                 tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-dim)">Sin resultados</td></tr>`;
-                return;
+            } else {
+                for (const emp of rows) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${emp.emp_no}</td>
+                        <td>${escapeHtml(emp.first_name)} ${escapeHtml(emp.last_name)}</td>
+                        <td>${emp.gender === 'M' ? 'Masculino' : 'Femenino'}</td>
+                        <td>${emp.hire_date}</td>
+                        <td><button class="btn-link" data-emp="${emp.emp_no}">Ver ficha</button></td>`;
+                    tbody.appendChild(tr);
+                }
+                tbody.querySelectorAll('.btn-link').forEach(b => {
+                    b.addEventListener('click', () => loadEmployeeDetail(b.dataset.emp));
+                });
             }
-            for (const emp of data) {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${emp.emp_no}</td>
-                    <td>${emp.first_name} ${emp.last_name}</td>
-                    <td>${emp.gender === 'M' ? 'Masculino' : 'Femenino'}</td>
-                    <td>${emp.hire_date}</td>
-                    <td><button class="btn-link" data-emp="${emp.emp_no}">Ver ficha</button></td>`;
-                tbody.appendChild(tr);
+
+            let noteEl = document.getElementById('searchMoreNote');
+            if (!noteEl) {
+                noteEl = document.createElement('p');
+                noteEl.id = 'searchMoreNote';
+                document.querySelector('.table-wrap').after(noteEl);
             }
-            tbody.querySelectorAll('.btn-link').forEach(b => {
-                b.addEventListener('click', () => loadEmployeeDetail(b.dataset.emp));
-            });
+            noteEl.textContent = result.has_more
+                ? 'Hay más de 50 coincidencias. Escribe un término más específico para refinar la búsqueda.'
+                : '';
+
         } catch (err) {
+            console.error(err);
             alert('Error en la búsqueda: ' + err.message);
         }
     };
@@ -282,6 +301,12 @@ async function loadEmployeeDetail(empNo) {
             Género: ${g.gender === 'M' ? 'Masculino' : 'Femenino'} &nbsp;·&nbsp;
             Nacimiento: ${g.birth_date} &nbsp;·&nbsp;
             Contratación: ${g.hire_date}`;
+
+        const avatarEl = document.getElementById('edAvatarFallback');
+        if (avatarEl) {
+            const iniciales = `${g.first_name?.[0] ?? ''}${g.last_name?.[0] ?? ''}`.toUpperCase();
+            avatarEl.textContent = iniciales || '--';
+        }
 
         fillTable('table-titles', data.titles, ['title', 'from_date', 'to_date']);
         fillTable('table-depts', data.departments, ['dept_name', 'from_date', 'to_date']);

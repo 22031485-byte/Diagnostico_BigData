@@ -1,6 +1,6 @@
 </main>
 <footer class="footer">
-    <p>Examen Diagnóstico · Big Data · Equipo: <strong>[nombre_de_equipo]</strong></p>
+    <p>Examen Diagnóstico · Big Data · Equipo: <strong>Equipo-4</strong></p>
 </footer>
 <script src="public/js/app.js"></script>
 </body>
