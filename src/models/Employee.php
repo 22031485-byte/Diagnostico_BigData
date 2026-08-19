@@ -88,13 +88,15 @@ class Employee
     /** 5. Top N empleados con mayor incremento salarial en su carrera */
     public function topSalaryIncrease(int $topN = 10): array
     {
-        $topN = max(1, min($topN, 100)); // límite razonable de seguridad
+        $topN = max(1, min($topN, 100));
         $sql = "SELECT
                     e.emp_no,
                     CONCAT(e.first_name, ' ', e.last_name) AS empleado,
                     MIN(s.salary) AS salario_minimo,
                     MAX(s.salary) AS salario_maximo,
-                    ROUND((MAX(s.salary) - MIN(s.salary)) / MIN(s.salary) * 100, 2) AS pct_incremento,
+                    ROUND(
+                        (MAX(s.salary) - MIN(s.salary)) / NULLIF(MIN(s.salary), 0) * 100, 2
+                    ) AS pct_incremento,
                     TIMESTAMPDIFF(
                         YEAR, e.hire_date,
                         IF(MAX(s.to_date) = '9999-01-01', CURDATE(), MAX(s.to_date))
@@ -138,24 +140,33 @@ class Employee
         return $this->pdo->query($sql)->fetchAll();
     }
 
-    /** Búsqueda de empleados por nombre, apellido o número de empleado */
+    /** Búsqueda de empleados por número (parcial), nombre o apellido */
     public function search(string $term): array
     {
         $like = "%{$term}%";
         $sql = "SELECT emp_no, first_name, last_name, gender, hire_date
                 FROM employees
-                WHERE emp_no = :exact
-                   OR first_name LIKE :like
-                   OR last_name LIKE :like
-                   OR CONCAT(first_name, ' ', last_name) LIKE :like
+                WHERE CAST(emp_no AS CHAR) LIKE :like_no
+                OR first_name LIKE :like1
+                OR last_name LIKE :like2
+                OR CONCAT(first_name, ' ', last_name) LIKE :like3
                 ORDER BY last_name, first_name
-                LIMIT 50";
+                LIMIT 51";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
-            'exact' => ctype_digit($term) ? (int)$term : -1,
-            'like'  => $like,
+            'like_no' => $like,
+            'like1'   => $like,
+            'like2'   => $like,
+            'like3'   => $like,
         ]);
-        return $stmt->fetchAll();
+        $rows = $stmt->fetchAll();
+
+        $hasMore = count($rows) > 50;
+        if ($hasMore) {
+            array_pop($rows);
+        }
+
+        return ['results' => $rows, 'has_more' => $hasMore];
     }
 
     /** Ficha detallada de un empleado: datos generales + histórico completo */

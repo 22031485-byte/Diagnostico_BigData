@@ -44,7 +44,7 @@ class ApiController
                 case 'employee_search':
                     $term = trim($params['q'] ?? '');
                     if ($term === '') {
-                        return ['data' => []];
+                        return ['data' => ['results' => [], 'has_more' => false]];
                     }
                     return ['data' => $this->model->search($term)];
 
