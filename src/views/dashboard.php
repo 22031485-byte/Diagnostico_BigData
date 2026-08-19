@@ -20,7 +20,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* ---------- HERO ---------- */
 .dash-hero {
     position: relative;
     display: grid;
@@ -35,7 +34,6 @@
     isolation: isolate;
 }
 .dash-hero::before {
-    /* textura sutil de puntos, como panel de control */
     content: '';
     position: absolute;
     inset: 0;
@@ -111,7 +109,6 @@
     .dash-hero-cta { margin-inline: auto; }
 }
 
-/* ---------- KPI CARDS ---------- */
 .dash-kpi-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -149,7 +146,6 @@
 .dash-kpi-label { font-size: 0.78rem; color: var(--dp-text-dim); font-weight: 500; }
 .dash-kpi-value { font-size: 1.3rem; font-weight: 700; color: var(--dp-navy-deep); font-family: 'Poppins', sans-serif; }
 
-/* ---------- QUICK LINKS (estilo botones oscuros del panel de servicios) ---------- */
 .dash-section-title {
     font-size: 1.15rem;
     font-weight: 700;

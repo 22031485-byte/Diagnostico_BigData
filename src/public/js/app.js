@@ -40,7 +40,6 @@ function renderChart(canvasId, config) {
 
 const PALETTE = ['#4f7cff', '#2fd6a8', '#ff8a5c', '#ff5c7a', '#c084fc', '#f4c542'];
 
-/* ============ REPORTES (tablas) ============ */
 
 function initReportTabs() {
     document.querySelectorAll('#reportTabs .tab-btn').forEach(btn => {
@@ -99,8 +98,6 @@ async function loadReport(n) {
         alert('Error cargando el reporte: ' + err.message);
     }
 }
-
-/* ============ GRÁFICOS ============ */
 
 function initGraphTabs() {
     document.querySelectorAll('#graphTabs .tab-btn').forEach(btn => {
@@ -170,7 +167,7 @@ async function loadGraph(n) {
                 const ranges = ['<30', '30-39', '40-49', '50-59', '>=60'];
                 const male = ranges.map(r => {
                     const row = data.find(d => d.rango_edad === r && d.gender === 'M');
-                    return row ? -Number(row.total_empleados) : 0; // negativo para pirámide
+                    return row ? -Number(row.total_empleados) : 0; 
                 });
                 const female = ranges.map(r => {
                     const row = data.find(d => d.rango_edad === r && d.gender === 'F');
@@ -238,7 +235,6 @@ async function loadGraph(n) {
     }
 }
 
-/* ============ CONSULTA DE EMPLEADOS ============ */
 
 function initEmployeeSearch() {
     const input = document.getElementById('employeeSearchInput');

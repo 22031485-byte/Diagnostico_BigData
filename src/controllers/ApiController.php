@@ -1,9 +1,4 @@
 <?php
-/**
- * controllers/ApiController.php
- * Atiende peticiones AJAX (fetch) y devuelve JSON.
- * Endpoint real: api.php?action=NOMBRE_ACCION&...parametros
- */
 
 class ApiController
 {

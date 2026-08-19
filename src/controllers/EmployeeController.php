@@ -1,8 +1,4 @@
 <?php
-/**
- * controllers/EmployeeController.php
- * Controlador de vistas (páginas HTML). No contiene SQL.
- */
 
 class EmployeeController
 {

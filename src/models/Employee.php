@@ -1,18 +1,5 @@
 <?php
-/**
- * models/Employee.php
- * Capa de acceso a datos (Model). Todas las consultas SQL viven aquí.
- *
- * Esquema (base "employees" estándar de MySQL):
- *   employees(emp_no, birth_date, first_name, last_name, gender, hire_date)
- *   departments(dept_no, dept_name)
- *   dept_emp(emp_no, dept_no, from_date, to_date)
- *   dept_manager(dept_no, emp_no, from_date, to_date)
- *   titles(emp_no, title, from_date, to_date)
- *   salaries(emp_no, salary, from_date, to_date)
- *
- * Convención: to_date = '9999-01-01' significa "registro vigente".
- */
+
 
 class Employee
 {
@@ -23,7 +10,6 @@ class Employee
         $this->pdo = $pdo;
     }
 
-    /** 1. Evolución de contrataciones por año y género */
     public function hiringByYearAndGender(): array
     {
         $sql = "SELECT YEAR(hire_date) AS anio,
@@ -35,7 +21,6 @@ class Employee
         return $this->pdo->query($sql)->fetchAll();
     }
 
-    /** 2. Salario promedio por departamento (empleados activos en el depto) */
     public function avgSalaryByDepartment(): array
     {
         $sql = "SELECT d.dept_name AS departamento,
@@ -48,7 +33,6 @@ class Employee
         return $this->pdo->query($sql)->fetchAll();
     }
 
-    /** 3. Número de empleados por departamento (activos) */
     public function employeeCountByDepartment(): array
     {
         $sql = "SELECT d.dept_name AS departamento,
@@ -60,7 +44,6 @@ class Employee
         return $this->pdo->query($sql)->fetchAll();
     }
 
-    /** 4. Empleados por rango de edad y género, contra una fecha de referencia configurable */
     public function employeesByAgeRangeAndGender(string $referenceDate): array
     {
         $sql = "SELECT
@@ -85,7 +68,6 @@ class Employee
         return $stmt->fetchAll();
     }
 
-    /** 5. Top N empleados con mayor incremento salarial en su carrera */
     public function topSalaryIncrease(int $topN = 10): array
     {
         $topN = max(1, min($topN, 100));
@@ -110,9 +92,6 @@ class Employee
         return $this->pdo->query($sql)->fetchAll();
     }
 
-    /**
-     * 6. Consulta avanzada propia: Rotación interna y antigüedad promedio por departamento.
-     */
     public function departmentRotationAnalysis(): array
     {
         $sql = "WITH emp_dept_count AS (
@@ -139,8 +118,7 @@ class Employee
                 ORDER BY pct_rotacion DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
-
-    /** Búsqueda de empleados por número (parcial), nombre o apellido */
+    
     public function search(string $term): array
     {
         $like = "%{$term}%";
@@ -169,7 +147,6 @@ class Employee
         return ['results' => $rows, 'has_more' => $hasMore];
     }
 
-    /** Ficha detallada de un empleado: datos generales + histórico completo */
     public function detail(int $empNo): ?array
     {
         $stmt = $this->pdo->prepare(

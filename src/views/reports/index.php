@@ -1,10 +1,5 @@
 <style>
-/* =========================================================
-   REPORTES — mismo sistema turquesa/navy que el dashboard
-   Nota: se sobreescriben las clases que ya usa app.js
-   (tab-btn, report-panel, filter-row, btn-primary, table-wrap,
-   hidden, page-header, report-desc) — no cambian los IDs.
-   ========================================================= */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 .rep-page {
@@ -22,7 +17,7 @@
 }
 .rep-page h1, .rep-page h2 { font-family: 'Poppins', sans-serif; }
 
-/* ---------- HEADER ---------- */
+
 .rep-page .page-header {
     display: block;
     border-bottom: none;
@@ -41,7 +36,7 @@
     font-size: 0.95rem;
 }
 
-/* ---------- TABS (píldora segmentada) ---------- */
+
 .rep-page .tabs {
     display: flex;
     flex-wrap: wrap;
@@ -72,7 +67,6 @@
     box-shadow: 0 4px 14px -4px rgba(11,114,133,0.45);
 }
 
-/* ---------- PANEL ---------- */
 .rep-page .report-panel {
     background: #fff;
     border: 1px solid var(--rp-line);
@@ -94,7 +88,6 @@
 }
 .rep-page .hidden { display: none !important; }
 
-/* ---------- FILTROS ---------- */
 .rep-page .filter-row {
     display: flex;
     align-items: center;
@@ -137,7 +130,6 @@
 }
 .rep-page .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
-/* ---------- TABLA ---------- */
 .rep-page .table-wrap {
     overflow-x: auto;
     border: 1px solid var(--rp-line);
