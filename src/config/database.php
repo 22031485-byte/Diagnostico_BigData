@@ -1,10 +1,4 @@
 <?php
-/**
- * config/database.php
- * Conexión centralizada a la base de datos (MySQL - employeesdb)
- * Usa variables de entorno si existen, si no, cae en los valores
- * de despliegue proporcionados por el profesor.
- */
 
 $db_host = getenv('DB_HOST') ?: 'localhost';
 $db_port = getenv('DB_PORT') ?: '3306';

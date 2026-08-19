@@ -1,10 +1,5 @@
 <style>
-/* =========================================================
-   CONSULTA DE EMPLEADOS — mismo sistema turquesa/navy
-   Nota: mantiene los IDs que usa app.js (employeeSearchInput,
-   btnSearchEmployee, table-search-results, employeeDetail,
-   edNombre, edGeneral, table-titles, table-depts, table-salaries)
-   ========================================================= */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 .emp-page {
@@ -22,7 +17,6 @@
 }
 .emp-page h1, .emp-page h2, .emp-page h3 { font-family: 'Poppins', sans-serif; }
 
-/* ---------- HEADER ---------- */
 .emp-page .page-header { margin-bottom: 1.8rem; }
 .emp-page .page-header h1 {
     font-size: 1.8rem;
@@ -37,7 +31,6 @@
     max-width: 65ch;
 }
 
-/* ---------- BARRA DE BÚSQUEDA ---------- */
 .emp-page .search-row {
     display: flex;
     gap: 0.7rem;
@@ -74,7 +67,6 @@
 }
 .emp-page .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
-/* ---------- TABLA DE RESULTADOS ---------- */
 .emp-page .table-wrap {
     overflow-x: auto;
     border: 1px solid var(--ep-line);
@@ -113,7 +105,6 @@
 
 #searchMoreNote { color: var(--ep-text-dim); font-size: 0.85rem; margin-top: 0.7rem; font-style: italic; }
 
-/* ---------- FICHA DEL EMPLEADO ---------- */
 .emp-page .employee-detail {
     margin-top: 2.2rem;
     background: linear-gradient(135deg, var(--ep-navy-deep), var(--ep-navy));

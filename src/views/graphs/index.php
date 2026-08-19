@@ -1,10 +1,5 @@
 <style>
-/* =========================================================
-   GRÁFICOS — mismo sistema turquesa/navy que dashboard y reportes
-   Nota: se sobreescriben las clases que ya usa app.js
-   (tab-btn, graph-panel, filter-row, btn-primary, chart-box,
-   hidden, page-header) — no cambian los IDs.
-   ========================================================= */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 .grp-page {
@@ -21,7 +16,7 @@
 }
 .grp-page h1, .grp-page h2 { font-family: 'Poppins', sans-serif; }
 
-/* ---------- HEADER ---------- */
+
 .grp-page .page-header {
     display: block;
     border-bottom: none;
@@ -40,7 +35,7 @@
     font-size: 0.95rem;
 }
 
-/* ---------- TABS (píldora segmentada, idéntico a reportes) ---------- */
+
 .grp-page .tabs {
     display: flex;
     flex-wrap: wrap;
@@ -71,7 +66,7 @@
     box-shadow: 0 4px 14px -4px rgba(11,114,133,0.45);
 }
 
-/* ---------- PANEL ---------- */
+
 .grp-page .graph-panel {
     background: #fff;
     border: 1px solid var(--gp-line);
@@ -87,7 +82,7 @@
 }
 .grp-page .hidden { display: none !important; }
 
-/* ---------- FILTROS (idéntico a reportes) ---------- */
+
 .grp-page .filter-row {
     display: flex;
     align-items: center;
@@ -130,7 +125,6 @@
 }
 .grp-page .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
-/* ---------- CANVAS BOX ---------- */
 .grp-page .chart-box {
     max-width: 900px;
     margin: 0 auto;

@@ -1,8 +1,4 @@
 <?php
-/**
- * api.php — Front Controller de la API
- * Único punto de entrada para las peticiones AJAX. Devuelve siempre JSON.
- */
 
 header('Content-Type: application/json; charset=utf-8');
 

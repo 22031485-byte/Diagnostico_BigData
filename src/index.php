@@ -1,8 +1,5 @@
 <?php
-/**
- * index.php — Front Controller
- * Único punto de entrada para las páginas de la aplicación.
- */
+
 
 require __DIR__ . '/config/database.php';
 require __DIR__ . '/models/Employee.php';
